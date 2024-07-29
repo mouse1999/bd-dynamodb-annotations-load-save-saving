@@ -9,7 +9,7 @@ import java.util.Objects;
 /**
  * Book POJO which maps to the Books table.
  */
-@DynamoDBTable(tableName = "DynamoDbAnnotationsLoadSave-Books")
+@DynamoDBTable(tableName = "Books")
 public class Book {
     private String asin;
     private String author;

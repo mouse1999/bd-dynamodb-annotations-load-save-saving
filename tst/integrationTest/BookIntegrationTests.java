@@ -1,13 +1,12 @@
 package integrationTest;
 
-//import com.amazon.ata.aws.dynamodb.DynamoDbClientProvider;
 
-import com.amazonaws.client.builder.AwsClientBuilder;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
-import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClientBuilder;
+
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 import main.Book;
 import main.BookDao;
+import main.DynamoDbClientProvider;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -21,9 +20,15 @@ public class BookIntegrationTests {
 
     private BookDao bookDao;
     private DynamoDBMapper dynamoDBMapper;
+    private AmazonDynamoDB dynamoDBClient;
 
     @BeforeEach
     private void setup() {
+        dynamoDBClient = DynamoDbClientProvider.REMOTE_CLIENT;
+        dynamoDBMapper = new DynamoDBMapper(dynamoDBClient);
+
+        bookDao = new BookDao(dynamoDBMapper);
+
         // PARTICIPANTS: use the DynamoDbClientProvider to get a client and create a DynamoDBMapper,
         //               then instantiate a BookDao for testing.
 
